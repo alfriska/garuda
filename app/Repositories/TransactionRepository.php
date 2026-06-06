@@ -27,12 +27,12 @@ class TransactionRepository implements TransactionRepositoryInterface
         session()->put('transaction', $transaction);
     }
 
-    public function saveTransaction($data)
+     public function saveTransaction($data)
     {
         $data['code'] = $this->generateTransactionCode();
         $data['number_of_passengers'] = $this->countPassengers($data['passengers']);
 
-        //hitung subtotal dan grand total awal
+        //hitung subtotal dan grandtotal awal
         $data['subtotal'] = $this->calculateSubtotal($data['flight_class_id'], $data['number_of_passengers']);
         $data['grandtotal'] = $data['subtotal'];
 
@@ -41,21 +41,23 @@ class TransactionRepository implements TransactionRepositoryInterface
             $data = $this->applyPromoCode($data);
         }
 
-        //tambahkan PPN
+        //tambahkan ppn
         $data['grandtotal'] = $this->addPPN($data['grandtotal']);
 
-        //simpan transaksi dari penumpang
+        //simpan transaksi dan penumpang
         $transaction = $this->createTransaction($data);
         $this->savePassengers($data['passengers'], $transaction->id);
+        
 
-        session()->forget('transaction'); //hapus data transaksi dari session
+        session()->forget('transaction');
 
         return $transaction;
     }
 
+
     private function generateTransactionCode()
     {
-        return "BWAGARUDA" . rand(1000, 999);
+        return "BWAGARUDA" . rand(1000, 9999);
     }
 
     private function countPassengers($passengers)
@@ -65,7 +67,7 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     private function calculateSubtotal($flightClassId, $numberOfPassengers)
     {
-        $price = FlightClass::findOnFail($flightClassId)->price;
+        $price = FlightClass::findOrFail($flightClassId)->price;
         return $price * $numberOfPassengers;
     }
 
@@ -117,11 +119,10 @@ class TransactionRepository implements TransactionRepositoryInterface
         return Transaction::where('code', $code)->first();
     }
 
-    public function getTransactionByCodeEmailPhone($code, $email, $phone)
+    public function getTransactionByCodePhone($code, $phone)
     {
         return Transaction::where('code', $code)
-            ->where('email', $email)
-            ->where('phone_number', $phone)
+            ->where('phone', $phone)
             ->first();
     }
 }

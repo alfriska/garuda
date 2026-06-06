@@ -31,7 +31,7 @@ class Transaction extends Model
 
     public function Class()
     {
-        return $this->belongsTo(FlightClass::class); //Relasi: Many to One, Transaksi ini milik satu kelas penerbangan
+        return $this->belongsTo(FlightClass::class, 'flight_class_id'); //Relasi: Many to One, Transaksi ini milik satu kelas penerbangan
     }
     public function promo()
     {

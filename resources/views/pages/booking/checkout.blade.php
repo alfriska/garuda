@@ -15,7 +15,7 @@
             <img src="{{ asset('assets/images/icons/arrow-left-white.svg') }}" class="w-6 h-6" alt="icon">
             <p class="font-semibold text-white">Back to Choose Seats</p>
         </a>
-        <h1 class="font-extrabold text-[50px] leading-[75px] mt-[30px]">Passenger Details</h1>
+        <h1 class="font-extrabold text-[50px] leading-[75px] mt-[30px]">Checkout Details</h1>
         <div class="flex gap-[30px] mt-[30px]">
             <div id="Left-Content" class="flex flex-col gap-[30px] w-[470px] shrink-0">
                 <div id="Flight-Info" class="flex flex-col w-[470px] shrink-0 h-fit rounded-[20px] bg-white p-5 gap-5">

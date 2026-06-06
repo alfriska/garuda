@@ -33,6 +33,7 @@ class TransactionResource extends Resource
                   ]),
                 Forms\Components\Section::make('Informasi Penumpang')
                     ->schema([
+                        Forms\Components\TextInput::make('number_of_passengers'),
                         Forms\Components\TextInput::make('name'),
                         Forms\Components\TextInput::make('email'),
                         Forms\Components\TextInput::make('phone'),
@@ -41,7 +42,10 @@ class TransactionResource extends Resource
                             Forms\Components\Repeater::make('passengers')
                                ->relationship('passengers')
                                  ->schema([
-                                     Forms\Components\TextInput::make('seat.name'),
+                                    Forms\Components\Select::make('flight_seat_id')
+                                        ->label('Seat Name')
+                                        ->relationship('seat', 'name')
+                                        ->required(),
                                       Forms\Components\TextInput::make('name'),
                                        Forms\Components\TextInput::make('date_of_birth'),
                                        Forms\Components\TextInput::make('nationality'),
@@ -51,9 +55,8 @@ class TransactionResource extends Resource
                 ]),
                             Forms\Components\Section::make('Pembayaran')
                                  ->schema([
-                                    Forms\Components\TextInput::make('promo.code'),
-                                    Forms\Components\TextInput::make('promo.discount_type'),
-                                    Forms\Components\TextInput::make('promo.discount'),
+                                    Forms\Components\Select::make('promo_code_id')
+                                        ->relationship('promo', 'code'),
                                     Forms\Components\TextInput::make('payment_status'),
                                     Forms\Components\TextInput::make('subtotal'),
                                     Forms\Components\TextInput::make('grandtotal'),

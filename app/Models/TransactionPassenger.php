@@ -25,6 +25,6 @@ class TransactionPassenger extends Model
 
     public function seat()
     {
-        return $this->belongsTo(FlightSeat::class); //Relasi: Many to One, Penumpang ini duduk di satu kursi penerbangan
+        return $this->belongsTo(FlightSeat::class, 'flight_seat_id'); //Relasi: Many to One, Penumpang ini duduk di satu kursi penerbangan
     }
 }
